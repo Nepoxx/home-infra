@@ -3,6 +3,5 @@ kind: Kustomization
 resources:
   - cert-manager.yaml
   - weave-gitops.yaml
-  - external-dns.yaml
   - longhorn.yaml
   
