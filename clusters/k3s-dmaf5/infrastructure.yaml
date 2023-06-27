@@ -45,7 +45,3 @@ spec:
   postBuild:
     substitute:
       support_email: "gagnon.pierluc@gmail.com"
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
