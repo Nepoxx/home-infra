@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-dns
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  interval: 24h
+  url: https://kubernetes-sigs.github.io/external-dns/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: external-dns
+      version: "1.x"
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: external-dns
+      interval: 12h
+  values:
+    provider: cloudflare
+    domainFilters:
+      - pierlucgagnon.com
+    extraArgs:
+      - --zone-id-filter=c2a09af57b4a44fc9d4d1551bc4fc296
+    env:
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: cf-creds
+            key: cf_api_token
+      - name: CF_API_EMAIL
+        value: ${support_email}
+---
+apiVersion: v1
+data:
+    cf_api_token: ENC[AES256_GCM,data:6bvqb+ZOJkd/rJ0qirYoBFhEXk6zAwK4GCKTJ+uHPhmQIvORfIgxvrP7AqV/J1Q1dFTkSh4yhb4=,iv:K/j3HwQ3KBM+/ZGrAsLaKakK2u5xCWfCAZXAqp+F4WQ=,tag:K4tVCGfG3ypON3uhFWc6Vw==,type:str]
+kind: Secret
+metadata:
+    name: cf-creds
+    namespace: external-dns
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1m986kl5ewqh3e84cj8lwav4uty7pyyv0zxa9psr6nxnnwndmxgdqqmlfc4
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBMUUtkUll2aHJYckVFZEdz
+            aEpYWU01c0U2OFJvaS9TTUZnbFc2QXFsNkZRClk0RE12RVJaN0JTQStCOXFPM1Q0
+            Y2JMQlhCYkN0VnJSNDdWeWQ4cGdTa2cKLS0tIEl4SWc2Z1NGM2VyWENxN1ZiUEVv
+            MjlTTE9tQ3IyWEN5MFJyaFpoRjVlQk0KOWrg5xAPiW01bzi9cPGfmmTy0jfE0Gb/
+            6crsLTlmDfOgNnQxH29qYCJ3WpYwZCWcyovIG/0bWSwlGoqhrKLNNA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-06-27T22:09:44Z"
+    mac: ENC[AES256_GCM,data:SUE+t8rvapen/oItJvxZOuCGHSTuzBUemuPkmWM4FE/J0YFVKtMXSqOvLooNGIFGvhogbbyECLucqb3tyNgN3oUL8hZwJ4rWwSPDlcCLHQyxxh7pkTnSHyb1LveU9M1XJLmAYttPJPfmHkGF2KKXh8aGk83R3HBcCKogNkoHVuU=,iv:oZUIUPU2Nr9gItHDMjzYaRxcD4qaWF83cwrMEIMiI9s=,tag:X3LqL7rweg0zH6jmz98Y2g==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
