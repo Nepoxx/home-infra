@@ -22,3 +22,4 @@ spec:
   postBuild:
     substitute:
       base_domain: "cloud.pierlucgagnon.com"
+      external_ip: 70.50.158.253
