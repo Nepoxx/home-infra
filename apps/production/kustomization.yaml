@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ../base/cert-manager
   - ../base/podinfo
-  - ../base/rflood
+  - ../base/transmission
