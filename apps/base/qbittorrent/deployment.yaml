@@ -35,6 +35,9 @@ spec:
                 value: "1"
         - name: qbittorrent
           image: ghcr.io/linuxserver/qbittorrent
+          env:
+            - name: WEBUI_PORT
+              value: "8085"
           volumeMounts:
             - mountPath: /downloads
               name: qbittorrent-downloads
@@ -42,7 +45,7 @@ spec:
               name: qbittorrent-config
           ports:
             - containerPort: 30007
-            - containerPort: 8080
+            - containerPort: 8085
       volumes:
         - name: qbittorrent-config
           hostPath:
