@@ -18,7 +18,7 @@ spec:
           image: ghcr.io/bubuntux/nordlynx
           env:
             - name: PRIVATE_KEY
-              valueFrom: 
+              valueFrom:
                 secretKeyRef:
                   name: qbittorrent
                   key: secret_key
@@ -57,7 +57,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: qbittorrent
+  name: qbittorrent-ports
   namespace: qbittorrent
 spec:
   type: NodePort
@@ -68,3 +68,18 @@ spec:
       targetPort: 30007
       nodePort: 30007
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent
+  namespace: qbittorrent
+spec:
+  ports:
+    - name: http
+      port: 8085
+      protocol: TCP
+      targetPort: 8085
+  selector:
+    app: qbittorrent
+  type: ClusterIP
