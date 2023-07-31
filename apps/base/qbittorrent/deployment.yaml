@@ -15,22 +15,21 @@ spec:
     spec:
       containers:
         - name: nordvpn
-          image: bubuntux/nordvpn
+          image: ghcr.io/bubuntux/nordlynx
           env:
-            - name: TOKEN
-              value: e9f2ab3e7e05b70f744185c4a992d8551de961f1f2cafa6b08aa5b7ab7de7c7c
-            - name: CONNECT
-              value: Canada
-            - name: TECHNOLOGY
-              value: NordLynx
-            - name: NETWORK
+            - name: PRIVATE_KEY
+              valueFrom: 
+                secretKeyRef:
+                  name: qbittorrent
+                  key: secret_key
+            - name: COUNTRY_CODE
+              value: ca
+            - name: NET_LOCAL
               value: 192.168.1.0/24
           securityContext:
             capabilities:
               add:
                 - NET_ADMIN
-                - NET_RAW
-                - SYS_MODULE
             sysctls:
               - name: net.ipv6.conf.all.disable_ipv6
                 value: "1"

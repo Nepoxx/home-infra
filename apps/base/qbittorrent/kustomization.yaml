@@ -4,3 +4,4 @@ namespace: qbittorrent
 resources:
   - namespace.yaml
   - deployment.yaml
+  - secret.yaml
