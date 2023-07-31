@@ -42,6 +42,7 @@ spec:
               name: qbittorrent-config
           ports:
             - containerPort: 30007
+            - containerPort: 8080
       volumes:
         - name: qbittorrent-config
           hostPath:
