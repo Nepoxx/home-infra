@@ -21,9 +21,12 @@ spec:
             - /data
           env:
             - name: MINIO_ROOT_USER
-              value: "minio"
+              value: "nepoxx"
             - name: MINIO_ROOT_PASSWORD
-              value: "minio123"
+              valueFrom:
+                secretKeyRef:
+                  name: minio
+                  key: root_password
             - name: MINIO_DOMAIN
               value: "minio.${base_domain}"
             - name: MINIO_SERVER_URL
