@@ -30,7 +30,7 @@ spec:
             - name: MINIO_DOMAIN
               value: "minio.${base_domain}"
             - name: MINIO_SERVER_URL
-              value: "minio.${base_domain}"
+              value: "https://minio.${base_domain}"
           ports:
             - containerPort: 9000
           volumeMounts:
