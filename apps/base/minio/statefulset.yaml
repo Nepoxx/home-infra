@@ -1,13 +1,14 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: minio
   namespace: minio
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: minio
+  replicas: 1
+  serviceName: minio
   template:
     metadata:
       labels:
@@ -52,6 +53,7 @@ spec:
         - name: minio-data
           hostPath:
             path: /media/external2tb/k3s/minio
+
 ---
 apiVersion: v1
 kind: Service
