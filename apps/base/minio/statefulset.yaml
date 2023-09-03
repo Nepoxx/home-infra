@@ -66,9 +66,11 @@ metadata:
 spec:
   ports:
     - port: 9000
+      name: minio
       protocol: TCP
       targetPort: 9000
     - port: 9001
+      name: console
       protocol: TCP
       targetPort: 9001
   selector:
