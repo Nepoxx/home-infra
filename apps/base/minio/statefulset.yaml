@@ -34,6 +34,8 @@ spec:
               value: "minio.${base_domain}"
             - name: MINIO_SERVER_URL
               value: "https://minio.${base_domain}"
+            - name: MINIO_BROWSER_REDIRECT_URL
+              value: "https://minioconsole.${base_domain}"
           ports:
             - containerPort: 9000
             - containerPort: 9001
