@@ -52,7 +52,7 @@ spec:
             path: /opt/kubernetes/data/qbittorrent/config
         - name: qbittorrent-downloads
           hostPath:
-            path: /opt/kubernetes/data/qbittorrent/downloads
+            path: /media/external2tb/k3s/qbittorrent/downloads
 ---
 apiVersion: v1
 kind: Service
