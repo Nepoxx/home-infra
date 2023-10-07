@@ -18,8 +18,8 @@ spec:
         - name: gitness
           image: harness/gitness
           env:
-            - name: FOO
-              value: "https://minio.${base_domain}"
+            - name: GITNESS_URL_BASE
+              value: "https://gitness.${base_domain}"
           ports:
             - containerPort: 3000
           volumeMounts:
