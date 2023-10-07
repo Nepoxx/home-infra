@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitness
+  namespace: gitness
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/target: ${external_ip}
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: gitness.${base_domain}
+      http:
+        paths:
+          - backend:
+              service:
+                name: minio
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - gitness.${base_domain}
+      secretName: gitness-tls

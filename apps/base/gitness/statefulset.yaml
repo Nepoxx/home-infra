@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: gitness
+  namespace: gitness
+spec:
+  selector:
+    matchLabels:
+      app: gitness
+  replicas: 1
+  serviceName: gitness
+  template:
+    metadata:
+      labels:
+        app: gitness
+    spec:
+      containers:
+        - name: gitness
+          image: harness/gitness
+          env:
+            - name: FOO
+              value: "https://minio.${base_domain}"
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - mountPath: /data
+              name: gitness-data
+      volumes:
+        - name: gitness-data
+          hostPath:
+            path: /media/external2tb/k3s/gitness
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitness
+  namespace: gitness
+spec:
+  ports:
+    - port: 3000
+      name: gitness
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: gitness
+  type: ClusterIP
