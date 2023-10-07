@@ -5,3 +5,4 @@ resources:
   - ../base/minio
   - ../base/podinfo
   - ../base/qbittorrent
+  - ../base/gitness
