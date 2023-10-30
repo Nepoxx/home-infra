@@ -1,0 +1,55 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: immich
+  namespace: immich
+  labels:
+    type: local
+spec:
+  interval: 24h
+  url: https://immich-app.github.io/immich-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: immich
+  namespace: immich
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: immich
+      version: "0.*"
+      sourceRef:
+        kind: HelmRepository
+        name: immich
+        namespace: immich
+      interval: 12h
+  values:
+    immich:
+      persistence:
+        # Main data store for all photos shared between different components.
+        library:
+          # Automatically creating the library volume is not supported by this chart
+          # You have to specify an existing PVC to use
+          existingClaim: immich-pv-claim
+    proxy:
+      enabled: true
+
+      persistence:
+        library:
+          enabled: false
+
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: traefik
+          hosts:
+            - host: immich.${base_domain}
+              paths:
+                - path: "/"
+          tls:
+            - hosts:
+                - immich.${base_domain}
+              secretName: immich-tls
