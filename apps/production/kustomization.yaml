@@ -6,3 +6,4 @@ resources:
   - ../base/podinfo
   - ../base/qbittorrent
   - ../base/gitness
+  - ../base/immich
