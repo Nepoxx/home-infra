@@ -5,7 +5,7 @@ metadata:
   namespace: qbittorrent
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    external-dns.alpha.kubernetes.io/target: ${external_ip}
+    external-dns.alpha.kubernetes.io/target: ${ddns_target}
 spec:
   ingressClassName: traefik
   rules:

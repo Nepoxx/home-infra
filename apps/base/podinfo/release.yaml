@@ -27,7 +27,7 @@ spec:
       className: traefik
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt
-        external-dns.alpha.kubernetes.io/target: ${external_ip}
+        external-dns.alpha.kubernetes.io/target: ${ddns_target}
       hosts:
         - host: podinfo.${base_domain}
           paths:
