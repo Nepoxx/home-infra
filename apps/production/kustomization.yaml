@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - ../base/cert-manager
   - ../base/minio
-  - ../base/podinfo
   - ../base/qbittorrent
-  - ../base/gitness
   - ../base/immich
+  - ../base/paperless
