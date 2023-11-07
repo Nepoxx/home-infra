@@ -32,18 +32,22 @@ spec:
         enabled: true
         retain: true
         mountPath: /media/external2tb/k3s/paperless/data
+        accessMode: ReadWriteOnce
       media:
         enabled: true
         retain: true
         mountPath: /media/external2tb/k3s/paperless/media
+        accessMode: ReadWriteOnce
       export:
         enabled: true
         retain: true
         mountPath: /media/external2tb/k3s/paperless/export
+        accessMode: ReadWriteOnce
       consume:
         enabled: true
         retain: true
         mountPath: /media/external2tb/k3s/paperless/consume
+        accessMode: ReadWriteOnce
     ingress:
       main:
         enabled: true
