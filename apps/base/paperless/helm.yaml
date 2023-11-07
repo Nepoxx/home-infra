@@ -27,6 +27,14 @@ spec:
         namespace: paperless
       interval: 12h
   values:
+    env:
+      PAPERLESS_URL: https://paperless.${base_domain}
+
+      # Adjust this key if you plan to make paperless available publicly. It should
+      # be a very long sequence of random characters. You don't need to remember it.
+      #PAPERLESS_SECRET_KEY=change-me
+
+      PAPERLESS_TIME_ZONE: America/Toronto
     persistence:
       data:
         enabled: true
