@@ -20,7 +20,7 @@ spec:
   chart:
     spec:
       chart: immich
-      version: "0.1.*"
+      version: "0.2.*"
       sourceRef:
         kind: HelmRepository
         name: immich
@@ -39,12 +39,8 @@ spec:
           # Automatically creating the library volume is not supported by this chart
           # You have to specify an existing PVC to use
           existingClaim: immich-pv-claim
-    proxy:
+    server:
       enabled: true
-
-      persistence:
-        library:
-          enabled: false
 
       ingress:
         main:
