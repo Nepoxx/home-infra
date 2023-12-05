@@ -53,24 +53,20 @@ spec:
         persistence:
             data:
                 enabled: true
-                mountPath: /media/external2tb/k3s/paperless/data
                 accessMode: ReadWriteOnce
                 size: 5Gi
             media:
                 enabled: true
-                mountPath: /media/external2tb/k3s/paperless/media
                 accessMode: ReadWriteOnce
                 size: 5Gi
             export:
                 enabled: true
-                mountPath: /media/external2tb/k3s/paperless/export
                 accessMode: ReadWriteOnce
                 size: 5Gi
             consume:
                 enabled: true
-                mountPath: /media/external2tb/k3s/paperless/consume
                 accessMode: ReadWriteOnce
-                size: 20Gi
+                size: 5Gi
         ingress:
             main:
                 enabled: true
