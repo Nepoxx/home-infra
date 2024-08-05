@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: nordvpn
-          image: ghcr.io/bubuntux/nordlynx
+          image: ghcr.io/bubuntux/nordlynx:2023-06-01
           env:
             - name: PRIVATE_KEY
               valueFrom:
@@ -34,7 +34,7 @@ spec:
               - name: net.ipv6.conf.all.disable_ipv6
                 value: "1"
         - name: qbittorrent
-          image: ghcr.io/linuxserver/qbittorrent
+          image: ghcr.io/linuxserver/qbittorrent:4.6.5
           env:
             - name: WEBUI_PORT
               value: "8085"
