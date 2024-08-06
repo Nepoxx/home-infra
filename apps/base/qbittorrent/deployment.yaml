@@ -13,6 +13,8 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      securityContext:
+        fsGroup: 967 # plex
       containers:
         - name: nordvpn
           image: ghcr.io/bubuntux/nordlynx:2023-06-01
