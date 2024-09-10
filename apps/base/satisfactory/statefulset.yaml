@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: satisfactory
-          image: wolveix/satisfactory-server:v1.7.0
+          image: wolveix/satisfactory-server:v1.7.2
           env:
             - name: DEBUG
               value: "false"
@@ -30,11 +30,13 @@ spec:
               value: "false"
             - name: STEAMBETA
               value: "false"
+            - name: SERVERGAMEPORT
+              value: "30777"
           ports:
-            - containerPort: 7777
+            - containerPort: 30777
               name: "game-tcp"
               protocol: TCP
-            - containerPort: 7777
+            - containerPort: 30777
               name: "game"
               protocol: UDP
           volumeMounts:
@@ -87,12 +89,12 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 7777
+    - port: 30777
       nodePort: 30777
       protocol: UDP
       name: "game"
       targetPort: "game"
-    - port: 7777
+    - port: 30777
       nodePort: 30777
       protocol: TCP
       name: "game-tcp"
