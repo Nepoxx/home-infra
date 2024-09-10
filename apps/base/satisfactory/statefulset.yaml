@@ -32,7 +32,7 @@ spec:
               value: "false"
           ports:
             - containerPort: 7777
-              name: "gameTCP"
+              name: "game-tcp"
               protocol: TCP
             - containerPort: 7777
               name: "game"
@@ -95,7 +95,7 @@ spec:
     - port: 7777
       nodePort: 7777
       protocol: TCP
-      name: "gameTCP"
-      targetPort: "gameTCP"
+      name: "game-tcp"
+      targetPort: "game-tcp"
   selector:
     app: satisfactory
