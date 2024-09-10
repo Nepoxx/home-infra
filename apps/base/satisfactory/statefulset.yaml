@@ -88,12 +88,12 @@ spec:
   type: NodePort
   ports:
     - port: 7777
-      nodePort: 7777
+      nodePort: 30777
       protocol: UDP
       name: "game"
       targetPort: "game"
     - port: 7777
-      nodePort: 7777
+      nodePort: 30777
       protocol: TCP
       name: "game-tcp"
       targetPort: "game-tcp"
