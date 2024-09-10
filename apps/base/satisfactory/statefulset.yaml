@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: satisfactory
+  namespace: satisfactory
+spec:
+  selector:
+    matchLabels:
+      app: satisfactory
+  serviceName: satisfactory
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: satisfactory
+    spec:
+      containers:
+        - name: satisfactory
+          image: wolveix/satisfactory-server:v1.7.0
+          env:
+            - name: DEBUG
+              value: "false"
+            - name: MAXPLAYERS
+              value: "8"
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: SKIPUPDATE
+              value: "false"
+            - name: STEAMBETA
+              value: "false"
+          ports:
+            - containerPort: 7777
+              name: "gameTCP"
+              protocol: TCP
+            - containerPort: 7777
+              name: "game"
+              protocol: UDP
+          volumeMounts:
+            - name: satisfactory-config
+              mountPath: /config
+            - name: satisfactory-backups
+              mountPath: /backups
+            - name: satisfactory-save
+              mountPath: /saved
+            - name: satisfactory-gamefiles
+              mountPath: /gamefiles
+      volumes:
+        - name: satisfactory-gamefiles
+          hostPath:
+            path: /media/external2tb/k3s/satisfactory
+
+  volumeClaimTemplates:
+    - metadata:
+        name: satisfactory-config
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+    - metadata:
+        name: satisfactory-backups
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+    - metadata:
+        name: satisfactory-save
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: satisfactory
+  namespace: satisfactory
+  labels:
+    app: satisfactory
+spec:
+  type: NodePort
+  ports:
+    - port: 7777
+      nodePort: 7777
+      protocol: UDP
+      name: "game"
+      targetPort: "game"
+    - port: 7777
+      nodePort: 7777
+      protocol: TCP
+      name: "gameTCP"
+      targetPort: "gameTCP"
+  selector:
+    app: satisfactory
