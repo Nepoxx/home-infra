@@ -15,9 +15,10 @@ spec:
     spec:
       securityContext:
         fsGroup: 967 # plex
-      containers:
+      initContainers:
         - name: nordvpn
           image: ghcr.io/bubuntux/nordlynx:2023-06-01
+          restartPolicy: Always
           env:
             - name: PRIVATE_KEY
               valueFrom:
@@ -35,6 +36,7 @@ spec:
             sysctls:
               - name: net.ipv6.conf.all.disable_ipv6
                 value: "1"
+      containers:
         - name: qbittorrent
           image: ghcr.io/linuxserver/qbittorrent:4.6.5
           env:
