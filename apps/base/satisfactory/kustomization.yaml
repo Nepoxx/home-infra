@@ -4,3 +4,4 @@ namespace: satisfactory
 resources:
   - namespace.yaml
   - statefulset.yaml
+  - rolebinding.yaml
