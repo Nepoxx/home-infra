@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: satisfactory
   serviceName: satisfactory
-  replicas: 1
+  replicas: 0
   template:
     metadata:
       labels:
