@@ -27,6 +27,9 @@ spec:
           volumeMounts:
             - name: factorio
               mountPath: /factorio
+            - name: factorio-config
+              mountPath: /factorio/config
+
       volumes:
         - name: factorio-config
           configMap:
@@ -71,7 +74,7 @@ metadata:
   name: factorio-config
   namespace: factorio
 data:
-  "config/server-adminlist.json": |
+  "server-adminlist.json": |
     [
     "nepoxx"
     ]
