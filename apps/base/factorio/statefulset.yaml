@@ -31,7 +31,8 @@ spec:
             - name: factorio
               mountPath: /factorio
             - name: factorio-config
-              mountPath: /factorio/config
+              mountPath: /factorio/config/server-adminlist.json
+              subPath: server-adminlist.json
 
       volumes:
         - name: factorio-config
