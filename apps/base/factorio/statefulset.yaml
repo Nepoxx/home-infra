@@ -14,6 +14,22 @@ spec:
       labels:
         app: factorio
     spec:
+      securityContext:
+        fsGroup: 845
+      initContainers:
+        - name: copy-config
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "cp /config/* /factorio/config/ && chown -R 845:845 /factorio/config",
+            ]
+          volumeMounts:
+            - name: factorio-config
+              mountPath: /config
+            - name: factorio
+              mountPath: /factorio
       containers:
         - name: factorio
           image: factoriotools/factorio:2.0
@@ -30,9 +46,6 @@ spec:
           volumeMounts:
             - name: factorio
               mountPath: /factorio
-            - name: factorio-config
-              mountPath: /factorio/config/server-adminlist.json
-              subPath: server-adminlist.json
 
       volumes:
         - name: factorio-config
