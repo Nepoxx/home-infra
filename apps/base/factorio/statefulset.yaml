@@ -17,11 +17,14 @@ spec:
       containers:
         - name: factorio
           image: factoriotools/factorio:2.0
+          env:
+            - name: PORT
+              value: "30197"
           ports:
             - containerPort: 27015
               name: "rcon"
               protocol: TCP
-            - containerPort: 34197
+            - containerPort: 30197
               name: "game"
               protocol: UDP
           volumeMounts:
@@ -55,8 +58,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 34197
-      nodePort: 34197
+    - port: 30197
+      nodePort: 30197
       protocol: UDP
       name: "game"
       targetPort: "game"
