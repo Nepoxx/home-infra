@@ -8,3 +8,4 @@ resources:
   #- ../base/paperless
   - ../base/qbittorrent
   - ../base/satisfactory
+  - ../base/factorio

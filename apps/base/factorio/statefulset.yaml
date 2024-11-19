@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: factorio
+  namespace: factorio
+spec:
+  selector:
+    matchLabels:
+      app: factorio
+  serviceName: factorio
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: factorio
+    spec:
+      containers:
+        - name: factorio
+          image: factoriotools/factorio:2.0
+          ports:
+            - containerPort: 27015
+              name: "rcon"
+              protocol: TCP
+            - containerPort: 34197
+              name: "game"
+              protocol: UDP
+          volumeMounts:
+            - name: factorio
+              mountPath: /factorio
+      volumes:
+        - name: factorio-config
+          configMap:
+            name: factorio-config
+
+  volumeClaimTemplates:
+    - metadata:
+        name: factorio
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: factorio
+  namespace: factorio
+  labels:
+    app: factorio
+spec:
+  type: NodePort
+  ports:
+    - port: 34197
+      nodePort: 34197
+      protocol: UDP
+      name: "game"
+      targetPort: "game"
+    - port: 27015
+      nodePort: 27015
+      protocol: TCP
+      name: "rcon"
+      targetPort: "rcon"
+  selector:
+    app: factorio
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: factorio-config
+  namespace: factorio
+data:
+  "config/server-adminlist.json": |
+    [
+    "nepoxx"
+    ]
