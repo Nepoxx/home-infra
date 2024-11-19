@@ -4,3 +4,4 @@ namespace: factorio
 resources:
   - namespace.yaml
   - statefulset.yaml
+  - secret.yaml

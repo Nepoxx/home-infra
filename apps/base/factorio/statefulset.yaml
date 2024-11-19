@@ -23,11 +23,13 @@ spec:
             [
               "sh",
               "-c",
-              "cp /config/* /factorio/config/ && chown -R 845:845 /factorio/config",
+              "cp /config/* /factorio/config/ && cp /secret/* /factorio/config/ && chown -R 845:845 /factorio/config",
             ]
           volumeMounts:
             - name: factorio-config
               mountPath: /config
+            - name: factorio-secret
+              mountPath: /secret
             - name: factorio
               mountPath: /factorio
       containers:
@@ -51,6 +53,9 @@ spec:
         - name: factorio-config
           configMap:
             name: factorio-config
+        - name: factorio-secret
+          secret:
+            secretName: factorio
 
   volumeClaimTemplates:
     - metadata:
