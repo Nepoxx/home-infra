@@ -34,7 +34,7 @@ spec:
               mountPath: /factorio
       containers:
         - name: factorio
-          image: factoriotools/factorio:latest
+          image: factoriotools/factorio:2.0.24
           env:
             - name: PORT
               value: "30197"
