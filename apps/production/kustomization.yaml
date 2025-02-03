@@ -9,3 +9,5 @@ resources:
   - ../base/qbittorrent
   - ../base/satisfactory
   - ../base/factorio
+  - ../base/random
+  - ../base/overseerr
