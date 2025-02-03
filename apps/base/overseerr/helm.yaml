@@ -27,6 +27,8 @@ spec:
         namespace: overseerr
       interval: 12h
   values:
+    image:
+      tag: 1.33.2
     env:
       TZ: "America/New York"
 
