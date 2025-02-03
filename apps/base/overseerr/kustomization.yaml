@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: overseerr
 resources:
   - namespace.yaml
-  - statefulset.yaml
-  - secret.yaml
+  - helm.yaml
