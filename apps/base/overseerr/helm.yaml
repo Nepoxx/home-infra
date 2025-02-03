@@ -30,6 +30,13 @@ spec:
     env:
       TZ: "America/New York"
 
+    persistence:
+      config:
+        enabled: true
+        mountPath: /app/config
+        accessMode: "ReadWriteOnce"
+        size: "1Gi"
+
     ingress:
       main:
         enabled: true
