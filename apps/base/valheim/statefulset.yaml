@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: valheim
-          image: lloesche/valheim-server
+          image: ghcr.io/lloesche/valheim-server
           env:
             - name: SERVER_NAME
               value: "Valheimer"
@@ -39,10 +39,8 @@ spec:
           volumeMounts:
             - name: valheim-data
               mountPath: /config
-      volumes:
-        - name: valheim-data
-          hostPath:
-            path: /media/external2tb/k3s/valheim
+            - name: valheim-server
+              mountPath: /opt/valheim
   volumeClaimTemplates:
     - metadata:
         name: valheim-data
@@ -51,3 +49,12 @@ spec:
         resources:
           requests:
             storage: 20Gi
+        storageClassName: manual
+    - metadata:
+        name: valheim-server
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: manual
