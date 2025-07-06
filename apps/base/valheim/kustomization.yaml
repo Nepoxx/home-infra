@@ -4,3 +4,4 @@ namespace: valheim
 resources:
   - namespace.yaml
   - statefulset.yaml
+  - service.yaml
