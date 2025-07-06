@@ -5,7 +5,6 @@ resources:
   #- ../base/immich
   - ../base/longhorn
   - ../base/minio
-  #- ../base/paperless
   - ../base/qbittorrent
   - ../base/satisfactory
   - ../base/factorio

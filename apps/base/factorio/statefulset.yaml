@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: factorio
   serviceName: factorio
-  replicas: 1
+  replicas: 0
   template:
     metadata:
       labels:
