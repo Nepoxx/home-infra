@@ -15,28 +15,58 @@ spec:
     spec:
       securityContext:
         fsGroup: 967 # plex
-      initContainers:
-        - name: nordvpn
-          image: ghcr.io/bubuntux/nordlynx:2023-06-01
-          restartPolicy: Always
-          env:
-            - name: PRIVATE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: qbittorrent
-                  key: secret_key
-            - name: COUNTRY_CODE
-              value: ca
-            - name: NET_LOCAL
-              value: 10.42.0.0/24,192.168.50.0/24
+        sysctls:
+          - name: net.ipv6.conf.all.disable_ipv6
+            value: "1"
+          - name: net.ipv4.conf.all.src_valid_mark
+            value: "1"
+      containers:
+        - name: gluetun
+          image: ghcr.io/qdm12/gluetun:v3.39
           securityContext:
             capabilities:
               add:
                 - NET_ADMIN
-            sysctls:
-              - name: net.ipv6.conf.all.disable_ipv6
-                value: "1"
-      containers:
+                - SYS_MODULE
+          env:
+            - name: VPN_SERVICE_PROVIDER
+              value: "nordvpn"
+            - name: VPN_TYPE
+              value: "wireguard"
+            - name: WIREGUARD_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: qbittorrent
+                  key: secret_key
+            - name: SERVER_COUNTRIES
+              value: "Canada"
+            - name: FIREWALL_VPN_INPUT_PORTS
+              value: "30007"
+            - name: FIREWALL_OUTBOUND_SUBNETS
+              value: "10.42.0.0/24,192.168.50.0/24"
+            - name: LOG_LEVEL
+              value: "info"
+          ports:
+            - containerPort: 8000
+              name: gluetun-http
+            - containerPort: 30007
+              name: torrent
+            - containerPort: 8085
+              name: qbit-web
+          livenessProbe:
+            httpGet:
+              path: /v1/publicip/ip
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /v1/publicip/ip
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
         - name: qbittorrent
           image: ghcr.io/linuxserver/qbittorrent:4.6.5
           env:
@@ -47,9 +77,6 @@ spec:
               name: qbittorrent-downloads
             - mountPath: /config
               name: qbittorrent-config
-          ports:
-            - containerPort: 30007
-            - containerPort: 8085
       volumes:
         - name: qbittorrent-config
           hostPath:
