@@ -37,12 +37,10 @@ spec:
               value: "Canada"
             - name: FIREWALL_VPN_INPUT_PORTS
               value: "30007"
-            - name: FIREWALL_OUTBOUND_SUBNETS
-              value: "10.42.0.0/24,192.168.50.0/24"
-            - name: LOG_LEVEL
-              value: "info"
             - name: BLOCK_IPV6
               value: "on"
+            - name: LOG_LEVEL
+              value: "info"
             - name: HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE
               value: '{"auth":"none"}'
           ports:
