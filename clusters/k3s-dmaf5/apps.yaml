@@ -22,4 +22,4 @@ spec:
   postBuild:
     substitute:
       base_domain: "cloud.pierlucgagnon.com"
-      ddns_target: "nepoxx.ddns.net"
+      ddns_target: "home.pierlucgagnon.com"
