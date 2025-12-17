@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cloudflare-ddns
+  namespace: cloudflare-ddns
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: ddns-updater
+              image: curlimages/curl:8.5.0
+              command: ["/bin/sh"]
+              args: ["/scripts/update-ddns.sh"]
+              env:
+                - name: CF_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: cf-api-token
+                      key: cf_api_token
+                - name: CF_ZONE_ID
+                  value: "c2a09af57b4a44fc9d4d1551bc4fc296"
+                - name: CF_RECORD_NAME
+                  value: "home.pierlucgagnon.com"
+                - name: CF_RECORD_TYPE
+                  value: "A"
+                - name: CF_TTL
+                  value: "300"
+                - name: CF_PROXIED
+                  value: "false"
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts
+                  readOnly: true
+          volumes:
+            - name: scripts
+              configMap:
+                name: ddns-scripts
+                defaultMode: 0755

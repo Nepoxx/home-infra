@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ddns-scripts
+  namespace: cloudflare-ddns
+data:
+  update-ddns.sh: |
+    #!/bin/sh
+    set -e
+
+    echo "[$(date)] Starting Cloudflare DDNS update..."
+
+    # Get current public IP
+    echo "Fetching current public IP..."
+    CURRENT_IP=$(curl -s https://cloudflare.com/cdn-cgi/trace | grep "ip=" | cut -d= -f2)
+
+    if [ -z "$CURRENT_IP" ]; then
+        echo "ERROR: Failed to get current IP"
+        exit 1
+    fi
+
+    echo "Current public IP: $CURRENT_IP"
+
+    # Get existing DNS record
+    echo "Fetching existing DNS record for $CF_RECORD_NAME..."
+    RECORD_DATA=$(curl -s -X GET \
+        "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/dns_records?type=${CF_RECORD_TYPE}&name=${CF_RECORD_NAME}" \
+        -H "Authorization: Bearer ${CF_API_TOKEN}" \
+        -H "Content-Type: application/json")
+
+    # Extract record ID and existing IP
+    RECORD_ID=$(echo "$RECORD_DATA" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
+    EXISTING_IP=$(echo "$RECORD_DATA" | grep -o '"content":"[^"]*"' | head -1 | cut -d'"' -f4)
+
+    echo "Existing DNS record IP: ${EXISTING_IP:-'(not found)'}"
+
+    # Check if IP has changed
+    if [ "$EXISTING_IP" = "$CURRENT_IP" ]; then
+        echo "IP unchanged. No update needed."
+        exit 0
+    fi
+
+    # Update or create DNS record
+    if [ -n "$RECORD_ID" ]; then
+        echo "Updating existing DNS record (ID: $RECORD_ID) to $CURRENT_IP..."
+        UPDATE_RESPONSE=$(curl -s -X PUT \
+            "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/dns_records/${RECORD_ID}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data "{\"type\":\"${CF_RECORD_TYPE}\",\"name\":\"${CF_RECORD_NAME}\",\"content\":\"${CURRENT_IP}\",\"ttl\":${CF_TTL},\"proxied\":${CF_PROXIED}}")
+    else
+        echo "Creating new DNS record for $CF_RECORD_NAME with IP $CURRENT_IP..."
+        UPDATE_RESPONSE=$(curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/dns_records" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data "{\"type\":\"${CF_RECORD_TYPE}\",\"name\":\"${CF_RECORD_NAME}\",\"content\":\"${CURRENT_IP}\",\"ttl\":${CF_TTL},\"proxied\":${CF_PROXIED}}")
+    fi
+
+    # Check if update was successful
+    if echo "$UPDATE_RESPONSE" | grep -q '"success":true'; then
+        echo "SUCCESS: DNS record updated successfully"
+        echo "[$(date)] Update complete"
+        exit 0
+    else
+        echo "ERROR: Failed to update DNS record"
+        echo "$UPDATE_RESPONSE"
+        exit 1
+    fi
