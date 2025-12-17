@@ -17,7 +17,7 @@ spec:
         fsGroup: 967 # plex
       containers:
         - name: gluetun
-          image: ghcr.io/qdm12/gluetun:v3.39
+          image: ghcr.io/qdm12/gluetun:v3.40.2
           securityContext:
             capabilities:
               add:
@@ -43,6 +43,8 @@ spec:
               value: "info"
             - name: BLOCK_IPV6
               value: "on"
+            - name: HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE
+              value: '{"auth":"none"}'
           ports:
             - containerPort: 8000
               name: gluetun-http
