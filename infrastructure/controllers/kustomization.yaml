@@ -4,4 +4,5 @@ resources:
   - cert-manager.yaml
   - weave-gitops.yaml
   - longhorn.yaml
+  - traefik-config.yaml
   
