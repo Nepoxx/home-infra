@@ -15,11 +15,6 @@ spec:
     spec:
       securityContext:
         fsGroup: 967 # plex
-        sysctls:
-          - name: net.ipv6.conf.all.disable_ipv6
-            value: "1"
-          - name: net.ipv4.conf.all.src_valid_mark
-            value: "1"
       containers:
         - name: gluetun
           image: ghcr.io/qdm12/gluetun:v3.39
@@ -46,6 +41,8 @@ spec:
               value: "10.42.0.0/24,192.168.50.0/24"
             - name: LOG_LEVEL
               value: "info"
+            - name: BLOCK_IPV6
+              value: "on"
           ports:
             - containerPort: 8000
               name: gluetun-http
