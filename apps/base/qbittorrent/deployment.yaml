@@ -92,10 +92,16 @@ spec:
   selector:
     app: qbittorrent
   ports:
-    - port: 30007
+    - name: torrent-tcp
+      port: 30007
       targetPort: 30007
       nodePort: 30007
       protocol: TCP
+    - name: torrent-udp
+      port: 30007
+      targetPort: 30007
+      nodePort: 30007
+      protocol: UDP
 ---
 apiVersion: v1
 kind: Service
