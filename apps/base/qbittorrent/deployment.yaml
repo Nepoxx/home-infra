@@ -27,16 +27,23 @@ spec:
             - name: VPN_SERVICE_PROVIDER
               value: "nordvpn"
             - name: VPN_TYPE
-              value: "wireguard"
-            - name: WIREGUARD_PRIVATE_KEY
+              value: "openvpn"
+            - name: VPN_RECONNECT
+              value: "true"
+            - name: OPENVPN_PROTOCOL
+              value: "udp"
+            - name: OPENVPN_USER
               valueFrom:
                 secretKeyRef:
                   name: qbittorrent
-                  key: secret_key
+                  key: openvpn_user
+            - name: OPENVPN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: qbittorrent
+                  key: openvpn_password
             - name: SERVER_COUNTRIES
               value: "Canada"
-            - name: FIREWALL_VPN_INPUT_PORTS
-              value: "30007"
             - name: BLOCK_IPV6
               value: "on"
             - name: LOG_LEVEL
@@ -46,8 +53,6 @@ spec:
           ports:
             - containerPort: 8000
               name: gluetun-http
-            - containerPort: 30007
-              name: torrent
             - containerPort: 8085
               name: qbit-web
           livenessProbe:
@@ -81,27 +86,6 @@ spec:
         - name: qbittorrent-downloads
           hostPath:
             path: /media/external2tb/k3s/qbittorrent/downloads
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: qbittorrent-ports
-  namespace: qbittorrent
-spec:
-  type: NodePort
-  selector:
-    app: qbittorrent
-  ports:
-    - name: torrent-tcp
-      port: 30007
-      targetPort: 30007
-      nodePort: 30007
-      protocol: TCP
-    - name: torrent-udp
-      port: 30007
-      targetPort: 30007
-      nodePort: 30007
-      protocol: UDP
 ---
 apiVersion: v1
 kind: Service
