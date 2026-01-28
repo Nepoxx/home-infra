@@ -27,25 +27,20 @@ spec:
             - name: VPN_SERVICE_PROVIDER
               value: "nordvpn"
             - name: VPN_TYPE
-              value: "openvpn"
-            - name: VPN_RECONNECT
-              value: "true"
-            - name: OPENVPN_PROTOCOL
-              value: "tcp"
-            - name: OPENVPN_USER
+              value: "wireguard"
+            - name: WIREGUARD_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
                   name: qbittorrent
-                  key: openvpn_user
-            - name: OPENVPN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: qbittorrent
-                  key: openvpn_password
+                  key: wireguard_private_key
             - name: SERVER_COUNTRIES
               value: "Canada"
             - name: BLOCK_IPV6
               value: "on"
+            - name: DOT
+              value: "off"
+            - name: DNS_ADDRESS
+              value: "127.0.0.1"
             - name: LOG_LEVEL
               value: "info"
             - name: HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE
