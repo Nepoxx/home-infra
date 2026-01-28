@@ -46,8 +46,6 @@ spec:
               value: "Canada"
             - name: BLOCK_IPV6
               value: "on"
-            - name: FIREWALL
-              value: "on"
             - name: LOG_LEVEL
               value: "info"
             - name: HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE
@@ -73,7 +71,7 @@ spec:
             periodSeconds: 10
             failureThreshold: 3
         - name: qbittorrent
-          image: ghcr.io/linuxserver/qbittorrent:4.6.5
+          image: ghcr.io/linuxserver/qbittorrent:5.1.4
           env:
             - name: WEBUI_PORT
               value: "8085"
