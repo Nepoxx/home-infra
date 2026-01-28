@@ -44,8 +44,6 @@ spec:
                   key: openvpn_password
             - name: SERVER_COUNTRIES
               value: "Canada"
-            - name: OPENVPN_CUSTOM_CONFIG
-              value: "keepalive 10 60\n"
             - name: BLOCK_IPV6
               value: "on"
             - name: FIREWALL
