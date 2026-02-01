@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: valheim
+  namespace: valheim
+spec:
+  selector:
+    matchLabels:
+      app: valheim
+  serviceName: valheim
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: valheim
+    spec:
+      containers:
+        - name: valheim
+          image: ghcr.io/lloesche/valheim-server
+          env:
+            - name: SERVER_NAME
+              value: "Valheimer"
+            - name: WORLD_NAME
+              value: "Winter2026"
+            - name: SERVER_PASS
+              value: "Nibbler"
+            - name: SERVER_PUBLIC
+              value: "false"
+            - name: ADMINLIST_IDS
+              value: "76561197962231138"
+          ports:
+            - containerPort: 2456
+              name: "valheim1"
+              protocol: UDP
+            - containerPort: 2457
+              name: "valheim2"
+              protocol: UDP
+            - containerPort: 2458
+              name: "valheim3"
+              protocol: UDP
+          volumeMounts:
+            - name: valheim-data
+              mountPath: /config
+            - name: valheim-server
+              mountPath: /opt/valheim
+  volumeClaimTemplates:
+    - metadata:
+        name: valheim-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 20Gi
+    - metadata:
+        name: valheim-server
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 5Gi
