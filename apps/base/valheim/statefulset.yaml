@@ -27,7 +27,7 @@ spec:
             - name: SERVER_PUBLIC
               value: "false"
             - name: ADMINLIST_IDS
-              value: "76561197962231138"
+              value: "76561197962231138 76561197975404358"
           ports:
             - containerPort: 2456
               name: "valheim1"
