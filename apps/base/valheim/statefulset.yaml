@@ -23,7 +23,10 @@ spec:
             - name: WORLD_NAME
               value: "Winter2026"
             - name: SERVER_PASS
-              value: "Nibbler"
+              valueFrom:
+                secretKeyRef:
+                  name: valheim
+                  key: server_password
             - name: SERVER_PUBLIC
               value: "false"
             - name: ADMINLIST_IDS
