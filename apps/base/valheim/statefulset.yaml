@@ -31,6 +31,8 @@ spec:
               value: "false"
             - name: ADMINLIST_IDS
               value: "76561197962231138 76561197975404358"
+            - name: BEPINEX
+              value: "true"
           ports:
             - containerPort: 2456
               name: "valheim1"
