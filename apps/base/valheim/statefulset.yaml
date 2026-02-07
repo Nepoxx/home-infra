@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: valheim
-          image: ghcr.io/lloesche/valheim-server
+          image: ghcr.io/community-valheim-tools/valheim-server
           env:
             - name: SERVER_NAME
               value: "Valheimer"
