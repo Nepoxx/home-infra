@@ -20,6 +20,8 @@ metadata:
   namespace: longhorn-system
 spec:
   interval: 1h
+  install:
+    createNamespace: true
   chart:
     spec:
       chart: longhorn
