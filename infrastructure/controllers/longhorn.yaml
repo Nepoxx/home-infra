@@ -22,6 +22,7 @@ spec:
   interval: 1h
   install:
     createNamespace: true
+    replace: true
   chart:
     spec:
       chart: longhorn
