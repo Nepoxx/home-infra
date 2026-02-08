@@ -34,7 +34,8 @@ spec:
       hosts:
         - host: forgejo.${base_domain}
           paths:
-            - path: "/"
+            - path: /
+              pathType: Prefix
       tls:
         - hosts:
             - forgejo.${base_domain}
