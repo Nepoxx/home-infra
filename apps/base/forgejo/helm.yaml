@@ -1,11 +1,9 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
 metadata:
   name: forgejo
   namespace: forgejo
-  labels:
-    type: local
 spec:
   interval: 24h
   url: oci://code.forgejo.org/forgejo-helm/forgejo
@@ -22,7 +20,7 @@ spec:
       chart: forgejo
       version: "16.0.*"
       sourceRef:
-        kind: HelmRepository
+        kind: OCIRepository
         name: forgejo
         namespace: forgejo
       interval: 12h
