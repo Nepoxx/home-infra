@@ -8,7 +8,7 @@ spec:
   interval: 24h
   url: oci://code.forgejo.org/forgejo-helm/forgejo
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: forgejo
