@@ -52,3 +52,19 @@ spec:
   selector:
     app: byparr
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: byparr-nodeport
+  namespace: byparr
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8191
+      protocol: TCP
+      targetPort: 8191
+      nodePort: 30819
+  selector:
+    app: byparr
