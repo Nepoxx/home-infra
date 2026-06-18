@@ -11,3 +11,4 @@ resources:
   - ../base/overseerr
   - ../base/valheim
   - ../base/forgejo
+  - ../base/byparr
