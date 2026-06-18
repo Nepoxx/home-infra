@@ -28,7 +28,7 @@ spec:
       interval: 12h
   values:
     image:
-      tag: 1.33.2
+      tag: 3.3.0
     env:
       TZ: "America/New York"
 
