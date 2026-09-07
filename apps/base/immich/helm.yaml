@@ -37,11 +37,14 @@ spec:
         library:
           existingClaim: immich-pv-claim
 
-    # Shared env for all immich components (server + machine-learning)
+    # Shared config for all immich components (server + machine-learning)
     controllers:
       main:
         containers:
           main:
+            # Chart 0.12.0 ships v2.6.3; pin the latest stable app version
+            image:
+              tag: v3.1.0
             env:
               # Chart defaults are a map, so passing a list replaces them
               # entirely - restate the ones the chart would have set
