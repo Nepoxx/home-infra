@@ -57,10 +57,9 @@ spec:
                   secretKeyRef:
                     name: immich-postgres
                     key: password
-              - name: DB_DATABASE_URL
+              # v3 renamed DB_DATABASE_URL to DB_URL
+              - name: DB_URL
                 value: postgresql://immich:$(DB_PASSWORD)@immich-postgres:5432/immich
-              - name: DB_PASSWORD_REQUIRED
-                value: $(DB_PASSWORD)
 
     server:
       enabled: true
