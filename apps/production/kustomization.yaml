@@ -6,9 +6,9 @@ resources:
   - ../base/longhorn
   - ../base/minio
   - ../base/qbittorrent
-  - ../base/satisfactory
+  #- ../base/satisfactory
   - ../base/factorio
   - ../base/overseerr
-  - ../base/valheim
+  #- ../base/valheim
   - ../base/forgejo
   - ../base/byparr
