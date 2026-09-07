@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: immich-postgres
+  replicas: 1
+  serviceName: immich-postgres
+  template:
+    metadata:
+      labels:
+        app: immich-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          env:
+            - name: POSTGRES_DB
+              value: immich
+            - name: POSTGRES_USER
+              value: immich
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: immich-postgres
+                  key: password
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "immich"]
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "immich"]
+      volumes:
+        - name: postgres-data
+          hostPath:
+            path: /media/external14tb/k3s/immich-postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich-postgres
+spec:
+  ports:
+    - port: 5432
+      name: postgres
+      targetPort: 5432
+  selector:
+    app: immich-postgres

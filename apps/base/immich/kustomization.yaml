@@ -4,4 +4,6 @@ namespace: immich
 resources:
   - namespace.yaml
   - pv.yaml
+  - postgres.yaml
+  - postgres-secret.yaml
   - helm.yaml
