@@ -60,6 +60,26 @@ spec:
               # v3 renamed DB_DATABASE_URL to DB_URL
               - name: DB_URL
                 value: postgresql://immich:$(DB_PASSWORD)@immich-postgres:5432/immich
+              # Gmail SMTP for invites / password resets
+              - name: EMAIL_SERVER_ADDRESS
+                value: smtp.gmail.com
+              - name: EMAIL_SERVER_PORT
+                value: "465"
+              - name: EMAIL_SERVER_SECURE
+                value: "true"
+              # Gmail requires From == authenticated sender
+              - name: EMAIL_SERVER_FROM
+                value: $(EMAIL_SERVER_USER)
+              - name: EMAIL_SERVER_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-email
+                    key: user
+              - name: EMAIL_SERVER_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-email
+                    key: password
 
     server:
       enabled: true
