@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /media/external2tb/k3s/immich
+    path: /media/external14tb/k3s/immich
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
