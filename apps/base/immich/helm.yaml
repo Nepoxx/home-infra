@@ -36,6 +36,12 @@ spec:
         # Automatically creating the library volume is not supported by this chart
         library:
           existingClaim: immich-pv-claim
+      # Hardware-accelerated video transcoding via the Vega iGPU (VA-API).
+      # Requires the /dev/dri hostPath mount under server.persistence below.
+      configuration:
+        ffmpeg:
+          accel: vaapi
+          accelDecode: true
 
     # Shared config for all immich components (server + machine-learning)
     controllers:
@@ -83,6 +89,16 @@ spec:
 
     server:
       enabled: true
+
+      # Expose the iGPU to the server container so the transcoder can use VA-API
+      persistence:
+        dri:
+          type: hostPath
+          hostPath: /dev/dri
+          advancedMounts:
+            main:
+              main:
+                - path: /dev/dri
 
       ingress:
         main:
