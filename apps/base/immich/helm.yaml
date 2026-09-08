@@ -90,6 +90,16 @@ spec:
     server:
       enabled: true
 
+      controllers:
+        main:
+          containers:
+            main:
+              # Bypass the runtime device-cgroup filter so the container can
+              # open /dev/dri for VA-API. ponytail: privileged is a wide hammer;
+              # upgrade path is a /dev/dri device plugin DaemonSet.
+              securityContext:
+                privileged: true
+
       # Expose the iGPU to the server container so the transcoder can use VA-API
       persistence:
         dri:
