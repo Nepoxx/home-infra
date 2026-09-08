@@ -10,5 +10,4 @@ resources:
   - ../base/factorio
   - ../base/overseerr
   #- ../base/valheim
-  - ../base/forgejo
   - ../base/byparr
