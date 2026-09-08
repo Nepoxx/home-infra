@@ -98,7 +98,7 @@ spec:
               # format=nv12 for the VAAPI sw-decode fallback (immich#27895).
               # Built by .github/workflows/immich-server-image.yml.
               image:
-                repository: ghcr.io/Nepoxx/immich-server
+                repository: ghcr.io/nepoxx/immich-server
                 tag: v3.1.0-nv12
                 pullPolicy: Always
               # Bypass the runtime device-cgroup filter so the container can
