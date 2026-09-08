@@ -21,5 +21,10 @@ spec:
         protocol: TCP
         tls:
           enabled: true
+    additionalArguments:
+      # Traefik v3 defaults respondingTimeouts.readTimeout to 60s, which kills
+      # large uploads (immich server only responds after the body arrives)
+      - --entryPoints.websecure.transport.respondingTimeouts.readTimeout=600s
+      - --entryPoints.websecure.transport.respondingTimeouts.idleTimeout=600s
     service:
       type: LoadBalancer
