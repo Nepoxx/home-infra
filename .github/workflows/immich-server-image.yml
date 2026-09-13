@@ -31,6 +31,6 @@ jobs:
           context: images/immich-server
           push: true
           # GHCR repository names must be lowercase
-          tags: ghcr.io/nepoxx/immich-server:v3.1.0-nv12
+          tags: ghcr.io/nepoxx/immich-server:v3.2.0-nv12
           cache-from: type=gha
           cache-to: type=gha,mode=max

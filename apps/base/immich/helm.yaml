@@ -94,12 +94,12 @@ spec:
         main:
           containers:
             main:
-              # Custom image: official v3.1.0 + ffmpeg shim injecting
+              # Custom image: official v3.2.0 + ffmpeg shim injecting
               # format=nv12 for the VAAPI sw-decode fallback (immich#27895).
               # Built by .github/workflows/immich-server-image.yml.
               image:
                 repository: ghcr.io/nepoxx/immich-server
-                tag: v3.1.0-nv12
+                tag: v3.2.0-nv12
                 pullPolicy: Always
               # Bypass the runtime device-cgroup filter so the container can
               # open /dev/dri for VA-API. ponytail: privileged is a wide hammer;
