@@ -17,6 +17,8 @@ spec:
       containers:
         - name: minio
           image: quay.io/minio/minio
+          # upstream image is no longer pullable; run the node-cached copy
+          imagePullPolicy: IfNotPresent
           args:
             - server
             - /data
