@@ -26,6 +26,8 @@ spec:
       interval: 12h
   values:
     provider: cloudflare
+    # Required by chart >=1.24 (no default); upsert-only was the previous default
+    policy: upsert-only
     domainFilters:
       - pierlucgagnon.com
     extraArgs:
