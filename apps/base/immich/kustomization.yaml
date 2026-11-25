@@ -7,4 +7,6 @@ resources:
   - postgres.yaml
   - postgres-secret.yaml
   - email-secret.yaml
+  - backup-secret.yaml
+  - backup.yaml
   - helm.yaml
