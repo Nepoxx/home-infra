@@ -32,3 +32,7 @@ spec:
         name: longhorn
         namespace: longhorn-system
       interval: 12h
+  values:
+    defaultSettings:
+      # Single node: extra replicas can never be scheduled and leave volumes degraded
+      defaultReplicaCount: 1
