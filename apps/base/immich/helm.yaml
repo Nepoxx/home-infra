@@ -50,7 +50,7 @@ spec:
           main:
             # Chart 0.12.0 ships v2.6.3; pin the latest stable app version
             image:
-              tag: v3.2.0
+              tag: v3.4.2
             env:
               # Chart defaults are a map, so passing a list replaces them
               # entirely - restate the ones the chart would have set
@@ -94,12 +94,12 @@ spec:
         main:
           containers:
             main:
-              # Custom image: official v3.2.0 + ffmpeg shim injecting
+              # Custom image: official v3.4.2 + ffmpeg shim injecting
               # format=nv12 for the VAAPI sw-decode fallback (immich#27895).
               # Built by .github/workflows/immich-server-image.yml.
               image:
                 repository: ghcr.io/nepoxx/immich-server
-                tag: v3.2.0-nv12
+                tag: v3.4.2-nv12
                 pullPolicy: Always
               # Bypass the runtime device-cgroup filter so the container can
               # open /dev/dri for VA-API. ponytail: privileged is a wide hammer;
